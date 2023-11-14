@@ -50,12 +50,12 @@ public void serialEvent(SerialPortEvent spe) {
                    todo+=texto;
                }else{
                    System.out.println(todo);
-                       PrototipoGarra.txtCod.setText(todo);
+                       //sPrototipoGarra.txtCod.setText(todo);
                    dato=todo;
                    todo="";
                }
            } catch (Exception e) {
-               System.out.println("Error: "+ e.getMessage());
+               System.out.println("Error serial : "+ e.getMessage());
            }
        }       
     }
@@ -85,7 +85,7 @@ public void serialEvent(SerialPortEvent spe) {
             setConectado(true);
             System.out.println("Conectandote");
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage());
+            System.out.println("Error conexion: "+e.getMessage());
         }
     }   
     public void desconectar(){
@@ -125,7 +125,7 @@ public void serialEvent(SerialPortEvent spe) {
             output.write((texto+"").getBytes());
             output.flush();
         } catch (Exception e) {
-            System.out.println("Error: "+e.getMessage() );
+            System.out.println("Error escribir: "+e.getMessage() );
         }
     }
     
