@@ -65,26 +65,7 @@ public class PrototipoGarra extends javax.swing.JFrame {
             transferenciaRealizada = true;
         }
     }
-    /*private void reiniciarHilo(){
-        statusHilo=true;
-        hilo=new Thread(){
-                @Override*/
-        /*public void run(){
-            while(statusHilo){
-                try {
-                    if(conexion.getTodo()!=""){
-                        txtCod.setText(conexion.getTodo());
-                    }
-                    System.out.println(conexion.getTodo());
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    System.out.println("Error hilo: "+ ex.getMessage());
-                }
-            }
-                }
-          
-    };
-    }*/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -11,6 +11,8 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import java.io.*;
 import java.util.*;
+import prototipobrazo.view.LecturaQr;
+import prototipobrazo.view.Principal;
 import prototipobrazo.view.PrototipoGarra;
 
 
@@ -50,7 +52,9 @@ public void serialEvent(SerialPortEvent spe) {
                    todo+=texto;
                }else{
                    System.out.println(todo);
-                       //sPrototipoGarra.txtCod.setText(todo);
+                   
+                   LecturaQr.txtLec.setText(todo);
+                                  
                    dato=todo;
                    todo="";
                }
