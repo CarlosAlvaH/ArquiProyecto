@@ -153,7 +153,7 @@ public class Principal extends javax.swing.JFrame {
         EstanteDaoInt esDa = new EstanteDAO();
         Estante est = new Estante();
         String dato = "";
-        dato = (String) tableEstante.getValueAt(tableEstante.getSelectedRow(), 3);
+        dato = (String) tableEstante.getValueAt(tableEstante.getSelectedRow(), 2);
         est.setIdEstante(dato);
         est.setEstado("VACIO");
         esDa.vaciar(est);

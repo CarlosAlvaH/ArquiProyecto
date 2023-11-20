@@ -159,7 +159,7 @@ public class Login0 extends javax.swing.JFrame {
             Connection cn = conexionJDB();
             PreparedStatement pst = cn.prepareStatement(sql);
             
-            pst.setString(1, usuario);
+            //pst.setString(1, usuario);
             
             rs = pst.executeQuery();
             while(rs.next()){
