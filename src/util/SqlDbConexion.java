@@ -25,7 +25,7 @@ public class SqlDbConexion {
 		Connection connection=null;
 		try {
 			connection=
-			DriverManager.getConnection("jdbc:mysql://localhost:3306/"+db,"root","");
+			DriverManager.getConnection("jdbc:mysql://localhost:3306/"+db,"root","12345678");
 		}catch (Exception e)
 		{
 			System.out.println("Error en la conexion:"+e.getMessage());

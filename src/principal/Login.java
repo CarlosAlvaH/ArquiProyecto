@@ -1,21 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package principal;
 
+import DAO.UsuarioDAO;
 import java.awt.Color;
-import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import static principal.Conexion.conexionJDB;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import prototipobrazo.view.Principal;
+import static util.SqlDbConexion.getConnection;
 
-/**
- *
- * @author Julio
- */
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -23,8 +23,15 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        setExtendedState(MAXIMIZED_BOTH);
-        this.getContentPane().setBackground(new Color(38,41,48));
+        this.getContentPane().setBackground(new Color(38, 41, 48));
+        String rut="D:\\Backup\\Descargas\\foto1.jpg";
+        String u="admin2";
+        
+        //Enviar la imagen a la base de datos
+        //insertarImagen(rut,u);
+        this.setImage(lblPrincipal, "src/imagen/Logfin+.jpg");
+        this.setImage(lblCorreo, "src/imagen/icon_correo.png");
+        this.setImage(lblLlave, "src/imagen/icon_llave.png");
     }
 
     /**
@@ -36,45 +43,38 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblPrincipal = new javax.swing.JLabel();
+        lblCorreo = new javax.swing.JLabel();
+        lblLlave = new javax.swing.JLabel();
         textEmail = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(lblPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 432, 330));
+        getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, 85, 85));
+        getContentPane().add(lblLlave, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 85, 85));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Logfin+.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 1010, 600));
+        textEmail.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
+        getContentPane().add(textEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 278, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/icon_correo.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 150, -1, 139));
+        txtPass.setFont(new java.awt.Font("Dubai", 0, 14)); // NOI18N
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 278, -1));
 
-        textEmail.setFont(new java.awt.Font("Dubai", 0, 24)); // NOI18N
-        getContentPane().add(textEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 200, 278, -1));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/icon_pass.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 320, 141, 132));
-
-        txtPass.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 380, 278, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Sign up");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 560, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 310, -1, -1));
 
         jCheckBox1.setBackground(new java.awt.Color(38, 41, 48));
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
+        jCheckBox1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("Remember me");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -82,31 +82,25 @@ public class Login extends javax.swing.JFrame {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1280, 500, 149, -1));
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 250, 149, -1));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Lost your password");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 560, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, -1, -1));
 
         jSeparator1.setBackground(new java.awt.Color(38, 41, 48));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 580, 154, 10));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 340, 154, 10));
 
         jSeparator2.setBackground(new java.awt.Color(38, 41, 48));
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 580, 60, 10));
-
-        jSeparator3.setBackground(new java.awt.Color(38, 41, 48));
-        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
-        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator3.setToolTipText("");
-        getContentPane().add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 100, 20, 420));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 330, 60, 10));
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator4.setAlignmentX(2.0F);
         jSeparator4.setAlignmentY(2.0F);
-        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 560, 20, 50));
+        getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 300, 20, 50));
 
         jButton1.setBackground(new java.awt.Color(51, 51, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,9 +110,10 @@ public class Login extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 640, 140, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 370, 180, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -126,32 +121,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String usuario=textEmail.getText();
+        String usuario = textEmail.getText();
         String pasw = txtPass.getText();
-        try {
-            ResultSet rs = null;
-            String sql = "SELECT * FROM usuario WHERE nom_user=?";
-
-            Connection cn = conexionJDB();
-            PreparedStatement pst = cn.prepareStatement(sql);
-
-            pst.setString(1, usuario);
-
-            rs = pst.executeQuery();
-            while(rs.next()){
-                String usu = rs.getString(1);
-                String pass = rs.getString(2);
-                if(usuario.equals(usu)){
-                    //pagina principal
-                    if(pasw.equals(pass)){
-                        //pagina principal
-                    }
-                }
-            }
-
-        } catch (SQLException | ClassNotFoundException ex) {
-
+        UsuarioDAO us = new UsuarioDAO();
+        boolean usua=us.IniciarSesion(usuario, pasw);
+        if(usua=false){
+            this.dispose();
+            Principal princ = new Principal();
+            
+            princ.setVisible(true);
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -180,6 +160,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -189,18 +170,53 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
+    public void setImage(JLabel label, String root) {
+        ImageIcon image = new ImageIcon(root);
+        Icon icono = new ImageIcon(image.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+        label.setIcon(icono);
+        this.repaint();
+    }
+
+    public void insertarImagen(String ruta, String nomUsu) {
+        File foto = new File(ruta);
+        if (!foto.exists()) {
+            System.out.println("El archivo no existe en la ruta");
+            return;
+        }
+        try (InputStream inputStream = new FileInputStream(foto)) {
+            String consulta = "UPDATE usuario SET foto_usu=? WHERE nom_usu=?";
+            ResultSet rs = null;
+            try {
+                Connection cn = getConnection("arquitectura");
+                PreparedStatement pst = cn.prepareStatement(consulta);
+                pst.setBinaryStream(1, inputStream, (int) foto.length());
+                pst.setString(2, nomUsu);
+                int rowsAffected = pst.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Archivo insertado correctamente en la columna LONGBLOB.");
+                } else {
+                    System.out.println("Error al insertar el archivo.");
+                }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            }
+        } catch (Exception e2) {
+            JOptionPane.showMessageDialog(null, "Error: " + e2.toString());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblLlave;
+    private javax.swing.JLabel lblPrincipal;
     private javax.swing.JTextField textEmail;
     private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables

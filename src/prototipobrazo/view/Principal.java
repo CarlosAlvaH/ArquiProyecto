@@ -4,8 +4,11 @@ import DAO.CajaDAO;
 import DAO.CajaDAOInt;
 import DAO.EstanteDAO;
 import DAO.EstanteDaoInt;
+import DAO.UsuarioDAO;
+import clases.Usuario;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonModel;
@@ -24,6 +27,8 @@ public class Principal extends javax.swing.JFrame {
 
     private static final Conexion conexion = new Conexion();
     LecturaQr lecQr = new LecturaQr();
+    UsuarioDAO consult_usu = new UsuarioDAO();
+    Usuario us = new Usuario();
 
     public Principal() {
         initComponents();
@@ -33,6 +38,18 @@ public class Principal extends javax.swing.JFrame {
         combEst();
         llenarPorcentaje();
         cambiarGraficos();
+        cargarUser();
+    }
+
+    public void cargarUser() {
+        consult_usu.CargarUsuario(us.getUser());
+        ImageIcon image = (ImageIcon) us.getFoto();
+        int tamano = Math.min(fotoLbl.getWidth(), fotoLbl.getHeight());
+        Image escalaImage = image.getImage().getScaledInstance(tamano, tamano, Image.SCALE_SMOOTH);
+        ImageIcon nuevaImg = new ImageIcon(escalaImage);
+        fotoLbl.setIcon(nuevaImg);
+        
+        lblNombre.setText(us.getNombre());
     }
 
     public void llenarCombo() {
@@ -244,13 +261,13 @@ public class Principal extends javax.swing.JFrame {
         int porcentajeD = calcularPorcentaje(dLLeno, dLLeno && !aLLeno && !bLLeno && !cLLeno && !eLLeno && !fLLeno);
         int porcentajeE = calcularPorcentaje(eLLeno, eLLeno && !aLLeno && !bLLeno && !cLLeno && !dLLeno && !fLLeno);
         int porcentajeF = calcularPorcentaje(fLLeno, fLLeno && !aLLeno && !bLLeno && !cLLeno && !dLLeno && !eLLeno);
-        
-        lbA.setText(porcentajeA+"%");
-        lbB.setText(porcentajeB+"%");
-        lbC.setText(porcentajeC+"%");
-        lbD.setText(porcentajeD+"%");
-        lbE.setText(porcentajeE+"%");
-        lbF.setText(porcentajeF+"%");
+
+        lbA.setText(porcentajeA + "%");
+        lbB.setText(porcentajeB + "%");
+        lbC.setText(porcentajeC + "%");
+        lbD.setText(porcentajeD + "%");
+        lbE.setText(porcentajeE + "%");
+        lbF.setText(porcentajeF + "%");
 
     }
 
@@ -261,8 +278,8 @@ public class Principal extends javax.swing.JFrame {
             return estado ? 100 : 0;
         }
     }
-    
-    private void cambiarGraficos(){
+
+    private void cambiarGraficos() {
         ImageIcon vacio = new ImageIcon("src/imagen/Vacio.png"); // Reemplaza con la ruta de tu imagen
         ImageIcon lleno = new ImageIcon("src/imagen/Lleno.png");
         switch (lbA.getText()) {
@@ -355,7 +372,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             default:
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -368,12 +385,12 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         lblNombre = new javax.swing.JLabel();
         btnConectar = new javax.swing.JButton();
         lblEst = new javax.swing.JLabel();
         cmbPuer = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
+        fotoLbl = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
@@ -460,8 +477,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("HandBot");
 
-        jButton2.setText("imgUsur");
-
         lblNombre.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre / Apelldo");
@@ -491,6 +506,8 @@ public class Principal extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Logo_Principal.png"))); // NOI18N
         jButton4.setBorder(null);
 
+        fotoLbl.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -498,18 +515,6 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(cmbPuer, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(81, 81, 81))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -520,7 +525,20 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(cmbPuer, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(fotoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,10 +547,10 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(fotoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -540,8 +558,8 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(btnConectar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                             .addComponent(lblEst))
                         .addGap(8, 8, 8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cmbPuer, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -1171,6 +1189,7 @@ public class Principal extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FecHorSa;
     private javax.swing.JButton btnConectar;
@@ -1184,9 +1203,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cmbEst;
     private javax.swing.JComboBox<String> cmbPuer;
+    private javax.swing.JLabel fotoLbl;
     private javax.swing.JButton imagen;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

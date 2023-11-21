@@ -312,6 +312,11 @@ public class PrototipoGarra21 extends javax.swing.JFrame {
         jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
 
         jTextField5.setText("10002");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
         jPanel7.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 71, -1));
 
         jTextField7.setText("10005");
@@ -473,6 +478,10 @@ public class PrototipoGarra21 extends javax.swing.JFrame {
     private void btnConnecMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConnecMouseExited
         btnConnec.setBackground(new Color(4,66,128));
     }//GEN-LAST:event_btnConnecMouseExited
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
 
     /**
      * @param args the command line arguments

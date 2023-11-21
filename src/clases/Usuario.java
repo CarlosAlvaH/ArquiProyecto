@@ -1,13 +1,43 @@
 package clases;
 
+import javax.swing.Icon;
+
 public class Usuario {
+    private String nombre;
+    private String apellido;
+    private Icon foto;
     private String user;
     private String pass;
 
-    public Usuario(String user, String pass) {
-        this.user = user;
-        this.pass = pass;
+    public Usuario() {
+        
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public Icon getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Icon foto) {
+        this.foto = foto;
+    }
+
+    
 
     public String getUser() {
         return user;
