@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +31,8 @@ public class Principal extends javax.swing.JFrame {
         dato();
         rellenarDatos();
         combEst();
+        llenarPorcentaje();
+        cambiarGraficos();
     }
 
     public void llenarCombo() {
@@ -107,20 +111,20 @@ public class Principal extends javax.swing.JFrame {
             defaultTableModel.setNumRows(0);
             defaultTableModel.setColumnCount(3);
             for (Estante est : listaEst) {
-                
+
                 Caja ca = caDao.Buscar(est.getIdCaja());
-                if(ca!=null){
+                if (ca != null) {
                     Object[] fila = {ca.getIdCaja(), ca.getNombre(), est.getIdEstante()};
-                defaultTableModel.addRow(fila);
+                    defaultTableModel.addRow(fila);
                 }
             }
             String[] titulo = new String[]{"Id_Caja", "Nombre", "Id_Estante"};
             defaultTableModel.setColumnIdentifiers(titulo);
-             JTableHeader TblHeader = tableEstante.getTableHeader();
-              tableEstante.getTableHeader().setBackground(Color.BLUE);
-              tableEstante.getTableHeader().setForeground(Color.WHITE);
-              Font fuente = new Font("Microsoft Sans Serif", Font.PLAIN, 16);
-              tableEstante.getTableHeader().setFont(fuente);
+            JTableHeader TblHeader = tableEstante.getTableHeader();
+            tableEstante.getTableHeader().setBackground(Color.BLUE);
+            tableEstante.getTableHeader().setForeground(Color.WHITE);
+            Font fuente = new Font("Microsoft Sans Serif", Font.PLAIN, 16);
+            tableEstante.getTableHeader().setFont(fuente);
 
         } catch (Exception e) {
             System.out.println("Error tabla :" + e.getMessage());
@@ -157,6 +161,201 @@ public class Principal extends javax.swing.JFrame {
         est.setIdEstante(dato);
         est.setEstado("VACIO");
         esDa.vaciar(est);
+    }
+
+    private void llenarPorcentaje() {
+        EstanteDaoInt estDa = new EstanteDAO();
+        List<Estante> estList = estDa.Listar();
+        boolean aLLeno = false;
+        boolean bLLeno = false;
+        boolean cLLeno = false;
+        boolean dLLeno = false;
+        boolean eLLeno = false;
+        boolean fLLeno = false;
+
+        for (Estante estante : estList) {
+            switch (estante.getIdEstante()) {
+                case "A01":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        aLLeno = true;
+                    }
+                    break;
+                case "A02":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        aLLeno = true;
+                    }
+                    break;
+                case "B01":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        bLLeno = true;
+                    }
+                    break;
+                case "B02":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        bLLeno = true;
+                    }
+                    break;
+                case "C01":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        cLLeno = true;
+                    }
+                    break;
+                case "C02":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        cLLeno = true;
+                    }
+                    break;
+                case "D01":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        dLLeno = true;
+                    }
+                    break;
+                case "D02":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        dLLeno = true;
+                    }
+                    break;
+                case "E01":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        eLLeno = true;
+                    }
+                    break;
+                case "E02":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        eLLeno = true;
+                    }
+                    break;
+                case "F01":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        fLLeno = true;
+                    }
+                    break;
+                case "F02":
+                    if ("LLENO".equals(estante.getEstado())) {
+                        fLLeno = true;
+                    }
+                    break;
+            }
+
+        }
+        int porcentajeA = calcularPorcentaje(aLLeno, aLLeno && !bLLeno && !cLLeno && !dLLeno && !eLLeno && !fLLeno);
+        int porcentajeB = calcularPorcentaje(bLLeno, bLLeno && !aLLeno && !cLLeno && !dLLeno && !eLLeno && !fLLeno);
+        int porcentajeC = calcularPorcentaje(cLLeno, cLLeno && !aLLeno && !bLLeno && !dLLeno && !eLLeno && !fLLeno);
+        int porcentajeD = calcularPorcentaje(dLLeno, dLLeno && !aLLeno && !bLLeno && !cLLeno && !eLLeno && !fLLeno);
+        int porcentajeE = calcularPorcentaje(eLLeno, eLLeno && !aLLeno && !bLLeno && !cLLeno && !dLLeno && !fLLeno);
+        int porcentajeF = calcularPorcentaje(fLLeno, fLLeno && !aLLeno && !bLLeno && !cLLeno && !dLLeno && !eLLeno);
+        
+        lbA.setText(porcentajeA+"%");
+        lbB.setText(porcentajeB+"%");
+        lbC.setText(porcentajeC+"%");
+        lbD.setText(porcentajeD+"%");
+        lbE.setText(porcentajeE+"%");
+        lbF.setText(porcentajeF+"%");
+
+    }
+
+    private int calcularPorcentaje(boolean estado, boolean soloUnoLLeno) {
+        if (soloUnoLLeno) {
+            return 50;
+        } else {
+            return estado ? 100 : 0;
+        }
+    }
+    
+    private void cambiarGraficos(){
+        ImageIcon vacio = new ImageIcon("src/imagen/Vacio.png"); // Reemplaza con la ruta de tu imagen
+        ImageIcon lleno = new ImageIcon("src/imagen/Lleno.png");
+        switch (lbA.getText()) {
+            case "100%":
+                lbA1.setIcon(lleno);
+                lbA2.setIcon(lleno);
+                break;
+            case "50%":
+                lbA1.setIcon(lleno);
+                lbA2.setIcon(vacio);
+                break;
+            case "0%":
+                lbA1.setIcon(vacio);
+                lbA2.setIcon(vacio);
+                break;
+            default:
+        }
+        switch (lbB.getText()) {
+            case "100%":
+                lbB1.setIcon(lleno);
+                lbB2.setIcon(lleno);
+                break;
+            case "50%":
+                lbB1.setIcon(lleno);
+                lbB2.setIcon(vacio);
+                break;
+            case "0%":
+                lbB1.setIcon(vacio);
+                lbB2.setIcon(vacio);
+                break;
+            default:
+        }
+        switch (lbC.getText()) {
+            case "100%":
+                lbC1.setIcon(lleno);
+                lbC2.setIcon(lleno);
+                break;
+            case "50%":
+                lbC1.setIcon(lleno);
+                lbC2.setIcon(vacio);
+                break;
+            case "0%":
+                lbC1.setIcon(vacio);
+                lbC2.setIcon(vacio);
+                break;
+            default:
+        }
+        switch (lbD.getText()) {
+            case "100%":
+                lbD1.setIcon(lleno);
+                lbD2.setIcon(lleno);
+                break;
+            case "50%":
+                lbD1.setIcon(lleno);
+                lbD2.setIcon(vacio);
+                break;
+            case "0%":
+                lbD1.setIcon(vacio);
+                lbD2.setIcon(vacio);
+                break;
+            default:
+        }
+        switch (lbE.getText()) {
+            case "100%":
+                lbE1.setIcon(lleno);
+                lbE2.setIcon(lleno);
+                break;
+            case "50%":
+                lbE1.setIcon(lleno);
+                lbE2.setIcon(vacio);
+                break;
+            case "0%":
+                lbE1.setIcon(vacio);
+                lbE2.setIcon(vacio);
+                break;
+            default:
+        }
+        switch (lbF.getText()) {
+            case "100%":
+                lbF1.setIcon(lleno);
+                lbF2.setIcon(lleno);
+                break;
+            case "50%":
+                lbF1.setIcon(lleno);
+                lbF2.setIcon(vacio);
+                break;
+            case "0%":
+                lbF1.setIcon(vacio);
+                lbF2.setIcon(vacio);
+                break;
+            default:
+        }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -213,20 +412,32 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableEstante = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
+        lbA1 = new javax.swing.JLabel();
+        lbA2 = new javax.swing.JLabel();
+        lbB1 = new javax.swing.JLabel();
+        lbC1 = new javax.swing.JLabel();
+        lbB2 = new javax.swing.JLabel();
+        lbC2 = new javax.swing.JLabel();
+        lbD1 = new javax.swing.JLabel();
+        lbD2 = new javax.swing.JLabel();
+        lbE1 = new javax.swing.JLabel();
+        lbE2 = new javax.swing.JLabel();
+        lbF1 = new javax.swing.JLabel();
+        lbF2 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        cmbEst = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lbF = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        cmbEst = new javax.swing.JComboBox<>();
+        lbA = new javax.swing.JLabel();
+        lbB = new javax.swing.JLabel();
+        lbC = new javax.swing.JLabel();
+        lbD = new javax.swing.JLabel();
+        lbE = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HandBot");
@@ -579,7 +790,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(112, 112, 112)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -611,7 +822,7 @@ public class Principal extends javax.swing.JFrame {
                                         .addComponent(FecHorSa, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -701,125 +912,131 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(20, 31, 37));
         jPanel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("A1");
+        lbA1.setForeground(new java.awt.Color(255, 255, 255));
+        lbA1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Lleno.png"))); // NOI18N
+        jPanel5.add(lbA1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 60, 100));
 
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("A2");
+        lbA2.setForeground(new java.awt.Color(255, 255, 255));
+        lbA2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Vacio.png"))); // NOI18N
+        jPanel5.add(lbA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 60, 96));
 
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("B1");
+        lbB1.setForeground(new java.awt.Color(255, 255, 255));
+        lbB1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Lleno.png"))); // NOI18N
+        jPanel5.add(lbB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 60, 100));
 
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("B2");
+        lbC1.setForeground(new java.awt.Color(255, 255, 255));
+        lbC1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Lleno.png"))); // NOI18N
+        jPanel5.add(lbC1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 60, 100));
 
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("C2");
+        lbB2.setForeground(new java.awt.Color(255, 255, 255));
+        lbB2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Vacio.png"))); // NOI18N
+        jPanel5.add(lbB2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 60, 100));
 
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("C1");
+        lbC2.setForeground(new java.awt.Color(255, 255, 255));
+        lbC2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Vacio.png"))); // NOI18N
+        jPanel5.add(lbC2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 60, 100));
 
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("D1");
+        lbD1.setForeground(new java.awt.Color(255, 255, 255));
+        lbD1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Lleno.png"))); // NOI18N
+        jPanel5.add(lbD1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 60, 100));
 
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("D2");
+        lbD2.setForeground(new java.awt.Color(255, 255, 255));
+        lbD2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Vacio.png"))); // NOI18N
+        jPanel5.add(lbD2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 60, 98));
 
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("E1");
+        lbE1.setForeground(new java.awt.Color(255, 255, 255));
+        lbE1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Lleno.png"))); // NOI18N
+        jPanel5.add(lbE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 60, 100));
 
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("E2");
+        lbE2.setForeground(new java.awt.Color(255, 255, 255));
+        lbE2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Vacio.png"))); // NOI18N
+        jPanel5.add(lbE2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 60, 100));
 
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("F3");
+        lbF1.setForeground(new java.awt.Color(255, 255, 255));
+        lbF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Lleno.png"))); // NOI18N
+        jPanel5.add(lbF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 60, 100));
 
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("F2");
+        lbF2.setForeground(new java.awt.Color(255, 255, 255));
+        lbF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/Vacio.png"))); // NOI18N
+        jPanel5.add(lbF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 60, 98));
 
         jLabel23.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 24)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Estantes");
+        jPanel5.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, -1));
 
         cmbEst.setBackground(new java.awt.Color(120, 147, 166));
         cmbEst.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 14)); // NOI18N
         cmbEst.setForeground(new java.awt.Color(255, 255, 255));
         cmbEst.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A01", "A02", "B01", "B02", "C01", "C02", "D01", "D02", "E01", "E02", "F01", "F02", " " }));
+        jPanel5.add(cmbEst, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 95, -1));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 6, Short.MAX_VALUE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(148, 148, 148)
-                        .addComponent(cmbEst, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(cmbEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(86, 86, 86)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel21))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel22))
-                .addGap(84, 84, 84))
-        );
+        jLabel11.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        jLabel11.setForeground(java.awt.Color.white);
+        jLabel11.setText("F");
+        jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
+
+        lbF.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lbF.setForeground(java.awt.Color.white);
+        lbF.setText("%");
+        jPanel5.add(lbF, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        jLabel13.setForeground(java.awt.Color.white);
+        jLabel13.setText("B");
+        jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        jLabel14.setForeground(java.awt.Color.white);
+        jLabel14.setText("C");
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        jLabel15.setForeground(java.awt.Color.white);
+        jLabel15.setText("D");
+        jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        jLabel16.setForeground(java.awt.Color.white);
+        jLabel16.setText("E");
+        jPanel5.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        jLabel17.setForeground(java.awt.Color.white);
+        jLabel17.setText("A");
+        jPanel5.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
+
+        lbA.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lbA.setForeground(java.awt.Color.white);
+        lbA.setText("0%");
+        jPanel5.add(lbA, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, -1));
+
+        lbB.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lbB.setForeground(java.awt.Color.white);
+        lbB.setText("%");
+        jPanel5.add(lbB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, -1, -1));
+
+        lbC.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lbC.setForeground(java.awt.Color.white);
+        lbC.setText("%");
+        jPanel5.add(lbC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, -1, -1));
+
+        lbD.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lbD.setForeground(java.awt.Color.white);
+        lbD.setText("%");
+        jPanel5.add(lbD, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, -1, -1));
+
+        lbE.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
+        lbE.setForeground(java.awt.Color.white);
+        lbE.setText("%");
+        jPanel5.add(lbE, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, -1, -1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -829,19 +1046,16 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -978,18 +1192,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1010,6 +1218,24 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbA;
+    private javax.swing.JLabel lbA1;
+    private javax.swing.JLabel lbA2;
+    private javax.swing.JLabel lbB;
+    private javax.swing.JLabel lbB1;
+    private javax.swing.JLabel lbB2;
+    private javax.swing.JLabel lbC;
+    private javax.swing.JLabel lbC1;
+    private javax.swing.JLabel lbC2;
+    private javax.swing.JLabel lbD;
+    private javax.swing.JLabel lbD1;
+    private javax.swing.JLabel lbD2;
+    private javax.swing.JLabel lbE;
+    private javax.swing.JLabel lbE1;
+    private javax.swing.JLabel lbE2;
+    private javax.swing.JLabel lbF;
+    private javax.swing.JLabel lbF1;
+    private javax.swing.JLabel lbF2;
     private javax.swing.JLabel lblEst;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tableEstante;
