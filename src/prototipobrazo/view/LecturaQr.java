@@ -125,6 +125,7 @@ public static boolean statusHilo=false;
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         txtCod.setText("");
         transferenciaRealizada=false;
+        conexion.escribir(201);
     }//GEN-LAST:event_formWindowClosed
     public void dato(){
         

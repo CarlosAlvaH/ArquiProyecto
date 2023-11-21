@@ -125,7 +125,7 @@ public class Login extends javax.swing.JFrame {
         String pasw = txtPass.getText();
         UsuarioDAO us = new UsuarioDAO();
         boolean usua=us.IniciarSesion(usuario, pasw);
-        if(usua=false){
+        if(usua=true){
             this.dispose();
             Principal princ = new Principal();
             
@@ -221,3 +221,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 }
+
