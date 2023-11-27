@@ -28,7 +28,7 @@ public class Principal extends javax.swing.JFrame {
     private static final Conexion conexion = new Conexion();
     LecturaQr lecQr = new LecturaQr();
     UsuarioDAO consult_usu = new UsuarioDAO();
-    Usuario us= new Usuario();
+    Usuario us = new Usuario();
 
     public Principal() {
         initComponents();
@@ -49,7 +49,7 @@ public class Principal extends javax.swing.JFrame {
         Image escalaImage = image.getImage().getScaledInstance(122, 102, Image.SCALE_SMOOTH);
         ImageIcon nuevaImg = new ImageIcon(escalaImage);
         fotoLbl.setIcon(nuevaImg);
-        
+
         lblNombre.setText(us.getNombre());
     }
 
@@ -171,7 +171,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void RegistrarSalida() {
-        CajaDAOInt cajDa = new CajaDAO();
         EstanteDaoInt esDa = new EstanteDAO();
         Estante est = new Estante();
         String dato = "";
@@ -262,8 +261,8 @@ public class Principal extends javax.swing.JFrame {
             }
 
         }
-        int porcentajeA = calcularPorcentaje(aLLeno, a1LLeno );
-        int porcentajeB = calcularPorcentaje(bLLeno,b1LLeno);
+        int porcentajeA = calcularPorcentaje(aLLeno, a1LLeno);
+        int porcentajeB = calcularPorcentaje(bLLeno, b1LLeno);
         int porcentajeC = calcularPorcentaje(cLLeno, c1LLeno);
         int porcentajeD = calcularPorcentaje(dLLeno, d1LLeno);
         int porcentajeE = calcularPorcentaje(eLLeno, e1LLeno);
@@ -281,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
     private int calcularPorcentaje(boolean estado, boolean soloUnoLLeno) {
         if (estado && soloUnoLLeno == true) {
             return 100;
-        } else if(estado== false && soloUnoLLeno==false){
+        } else if (estado == false && soloUnoLLeno == false) {
             return 0;
         } else {
             return 50;
@@ -384,12 +383,100 @@ public class Principal extends javax.swing.JFrame {
 
     }
 
-    private void cargarImagen(){
+    private void cargarImagen() {
         ImageIcon brazo = new ImageIcon("src/imagen/Brazo Test.png"); // Reemplaza con la ruta de tu imagen
         ImageIcon logo = new ImageIcon("src/imagen/Logo_Principal.png");
         lbLogo.setIcon(logo);
         lbTest.setIcon(brazo);
     }
+
+    private void extraerCaja() {
+        String estante = "";
+        estante = (String) tableEstante.getValueAt(tableEstante.getSelectedRow(), 2);
+        switch (estante) {
+            case "A01":
+                conexion.escribir(301);
+                break;
+            case "A02":
+                conexion.escribir(302);
+                break;
+            case "B01":
+                conexion.escribir(303);
+                break;
+            case "B02":
+                conexion.escribir(304);
+                break;
+            case "C01":
+                conexion.escribir(305);
+                break;
+            case "C02":
+                conexion.escribir(306);
+                break;
+            case "D01":
+                conexion.escribir(307);
+                break;
+            case "D02":
+                conexion.escribir(308);
+                break;
+            case "E01":
+                conexion.escribir(309);
+                break;
+            case "E02":
+                conexion.escribir(310);
+                break;
+            case "F01":
+                conexion.escribir(311);
+                break;
+            case "F02":
+                conexion.escribir(312);
+                break;
+        }
+    }
+    
+    private void ingresarCaja(){
+        String estante = "";
+        estante = cmbEst.getSelectedItem().toString().trim();
+        
+        switch (estante) {
+            case "A01":
+                conexion.escribir(401);
+                break;
+            case "A02":
+                conexion.escribir(402);
+                break;
+            case "B01":
+                conexion.escribir(403);
+                break;
+            case "B02":
+                conexion.escribir(404);
+                break;
+            case "C01":
+                conexion.escribir(405);
+                break;
+            case "C02":
+                conexion.escribir(406);
+                break;
+            case "D01":
+                conexion.escribir(407);
+                break;
+            case "D02":
+                conexion.escribir(408);
+                break;
+            case "E01":
+                conexion.escribir(409);
+                break;
+            case "E02":
+                conexion.escribir(410);
+                break;
+            case "F01":
+                conexion.escribir(411);
+                break;
+            case "F02":
+                conexion.escribir(412);
+                break;
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -474,6 +561,7 @@ public class Principal extends javax.swing.JFrame {
         setTitle("HandBot");
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(java.awt.Color.black);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -531,9 +619,9 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fotoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombre))
-                .addGap(71, 71, 71))
+                    .addComponent(lblNombre)
+                    .addComponent(fotoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -627,11 +715,21 @@ public class Principal extends javax.swing.JFrame {
         btnTestD.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 14)); // NOI18N
         btnTestD.setForeground(new java.awt.Color(255, 255, 255));
         btnTestD.setText("Test D");
+        btnTestD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestDActionPerformed(evt);
+            }
+        });
 
         btnTestE.setBackground(new java.awt.Color(51, 204, 255));
         btnTestE.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 14)); // NOI18N
         btnTestE.setForeground(new java.awt.Color(255, 255, 255));
         btnTestE.setText("Test E");
+        btnTestE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestEActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -762,8 +860,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel3.setForeground(java.awt.Color.white);
         jLabel3.setText("Codigo");
 
-        txtCodigo.setEditable(false);
-
         jLabel4.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         jLabel4.setForeground(java.awt.Color.white);
         jLabel4.setText("Nombre");
@@ -813,8 +909,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(112, 112, 112)
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -846,7 +942,7 @@ public class Principal extends javax.swing.JFrame {
                                         .addComponent(FecHorSa, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -916,6 +1012,11 @@ public class Principal extends javax.swing.JFrame {
         ));
         tableEstante.setGridColor(new java.awt.Color(120, 147, 166));
         tableEstante.setSelectionBackground(new java.awt.Color(120, 147, 166));
+        tableEstante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEstanteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableEstante);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -1142,23 +1243,29 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        conexion.escribir(200);
+
         lecQr.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         RegistrarIngreso();
+        ingresarCaja();
         limpiar();
         rellenarDatos();
         llenarPorcentaje();
         cambiarGraficos();
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        extraerCaja();
         RegistrarSalida();
+        
         rellenarDatos();
         combEst();
+        llenarPorcentaje();
+        cambiarGraficos();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cmbPuerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPuerActionPerformed
@@ -1167,7 +1274,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnTestAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestAActionPerformed
         conexion.escribir(101);
-        
+
     }//GEN-LAST:event_btnTestAActionPerformed
 
     private void btnTestBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestBActionPerformed
@@ -1177,6 +1284,20 @@ public class Principal extends javax.swing.JFrame {
     private void btnTestCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestCActionPerformed
         conexion.escribir(103);
     }//GEN-LAST:event_btnTestCActionPerformed
+
+    private void btnTestDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDActionPerformed
+        conexion.escribir(104);
+    }//GEN-LAST:event_btnTestDActionPerformed
+
+    private void btnTestEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestEActionPerformed
+        conexion.escribir(105);
+    }//GEN-LAST:event_btnTestEActionPerformed
+
+    private void tableEstanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstanteMouseClicked
+        String dato = "";
+        dato = (String) tableEstante.getValueAt(tableEstante.getSelectedRow(), 0);
+        txtCodigo.setText(dato);
+    }//GEN-LAST:event_tableEstanteMouseClicked
 
     /**
      * @param args the command line arguments

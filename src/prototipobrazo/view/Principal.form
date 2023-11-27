@@ -14,6 +14,7 @@
     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="0" green="0" id="black" palette="1" red="0" type="palette"/>
     </Property>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -147,10 +148,10 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="fotoLbl" min="-2" pref="108" max="-2" attributes="0"/>
                               <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
+                              <Component id="fotoLbl" min="-2" pref="148" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="lbLogo" min="-2" pref="149" max="-2" attributes="0"/>
@@ -430,6 +431,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Test D"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTestDActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnTestE">
                   <Properties>
@@ -444,6 +448,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Test E"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTestEActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbTest">
                 </Component>
@@ -586,8 +593,8 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" pref="418" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="imagen" min="-2" pref="158" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+                                  <Component id="imagen" min="-2" pref="211" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel3" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
@@ -630,7 +637,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="214" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -715,9 +722,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtCodigo">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
@@ -972,6 +976,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableEstanteMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
