@@ -12,57 +12,61 @@ import javax.swing.JOptionPane;
 import static util.SqlDbConexion.getConnection;
 
 public class UsuarioDAO {
-    public boolean IniciarSesion(String usuario, String pass){
+    Usuario us = new Usuario();
+    public Usuario IniciarSesion(String usuario, String pass){
         String consulta = "SELECT nom_usu, pass_usu FROM usuario";
-        boolean accesoConcedido = false;
+        Usuario us = new Usuario();
         ResultSet rs = null;
         try {
-            Usuario us = new Usuario();
-            Connection cn = getConnection("arquitectura");
-            PreparedStatement pst = cn.prepareStatement(consulta);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                us.setUser(rs.getString(1));
-                us.setPass(rs.getString(2)); 
-                if (usuario.equals(us.getUser()) && pass.equals(us.getPass())) {
+        Connection cn = getConnection("arquitectura");
+        PreparedStatement pst = cn.prepareStatement(consulta);
+        rs = pst.executeQuery();
+
+        while (rs.next()) {
+            us.setUser(rs.getString(1));
+            us.setPass(rs.getString(2));
+
+            if (usuario.equals(us.getUser()) && pass.equals(us.getPass())) {
                 JOptionPane.showMessageDialog(null, "Bienvenido");
-                accesoConcedido=true;
+                return us; // Devolver la instancia de Usuario1 si el inicio de sesión es exitoso
             }
-            }
-            if (!accesoConcedido) {
-                JOptionPane.showMessageDialog(null, "Acceso denegado");
-                accesoConcedido=false;
-            } 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
-        return accesoConcedido;
+
+        // Si llega aquí, significa que el inicio de sesión falló
+        JOptionPane.showMessageDialog(null, "Acceso denegado");
+        return null;
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        return null; // Manejar cualquier excepción y devolver null en caso de error
+    }
     }
     
-    public void CargarUsuario(String usua){
+    public Usuario CargarUsuario(String usua){
         String consulta="SELECT CONCAT(nombre,' ', apellidos), foto_usu FROM usuario WHERE nom_usu=?";
         ResultSet rs=null;
+        Usuario us = new Usuario();
         try{
             Connection cn=getConnection("arquitectura");
             PreparedStatement pst=cn.prepareStatement(consulta);
-            Usuario us = new Usuario();
-            usua = us.getUser();
+            us.setUser(usua);
             pst.setString(1, usua);
             rs=pst.executeQuery();
             if(rs.next()){
                 String usu=rs.getString(1);
                 Blob img=(Blob) rs.getBlob(2);
-                
                 us.setNombre(usu);
                 
                 byte[] imgBytes = img.getBytes(1, (int) img.length());
                 ImageIcon image = new ImageIcon(imgBytes);
                 us.setFoto(image);
                 // Escalado y ajuste a un cuadrado
+                return us;
             }
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error: "+e.toString());
         }
+        return null;
     }
 }

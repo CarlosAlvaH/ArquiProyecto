@@ -1,6 +1,7 @@
 package principal;
 
 import DAO.UsuarioDAO;
+import clases.Usuario;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
@@ -121,15 +122,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String usuario = textEmail.getText();
+       String usuario = textEmail.getText();
         String pasw = txtPass.getText();
         UsuarioDAO us = new UsuarioDAO();
-        boolean usua=us.IniciarSesion(usuario, pasw);
-        if(usua=true){
+        Usuario u = us.IniciarSesion(usuario, pasw);
+
+        if (u != null) {
             this.dispose();
-            Principal princ = new Principal();
-            
+            Principal princ = new Principal(u.getUser());
             princ.setVisible(true);
+        }  else {
+            System.out.println("Inicio de sesión fallido");
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

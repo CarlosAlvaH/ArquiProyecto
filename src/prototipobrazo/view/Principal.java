@@ -30,27 +30,31 @@ public class Principal extends javax.swing.JFrame {
     UsuarioDAO consult_usu = new UsuarioDAO();
     Usuario us = new Usuario();
 
-    public Principal() {
+    public Principal(String u) {
         initComponents();
+        us.setUser(u);
         llenarCombo();
         dato();
         rellenarDatos();
         combEst();
         llenarPorcentaje();
         cambiarGraficos();
-        cargarImagen();
+        //cargarImagen();
+        cargarUser();
         //cargarUser();
     }
 
     public void cargarUser() {
-        consult_usu.CargarUsuario(us.getUser());
-        ImageIcon image = (ImageIcon) us.getFoto();
+        Usuario use = consult_usu.CargarUsuario(us.getUser());
+        if (use != null) {
+        ImageIcon image = (ImageIcon) use.getFoto();
         int tamano = Math.min(fotoLbl.getWidth(), fotoLbl.getHeight());
-        Image escalaImage = image.getImage().getScaledInstance(122, 102, Image.SCALE_SMOOTH);
+        Image escalaImage = image.getImage().getScaledInstance(tamano, tamano, Image.SCALE_SMOOTH);
         ImageIcon nuevaImg = new ImageIcon(escalaImage);
         fotoLbl.setIcon(nuevaImg);
-
-        lblNombre.setText(us.getNombre());
+        
+        lblNombre.setText(use.getNombre());
+        }
     }
 
     public void llenarCombo() {
@@ -1329,7 +1333,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                //new Principal().setVisible(true);
             }
         });
     }
