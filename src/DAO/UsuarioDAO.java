@@ -43,7 +43,7 @@ public class UsuarioDAO {
     }
     
     public Usuario CargarUsuario(String usua){
-        String consulta="SELECT CONCAT(nombre,' ', apellidos), foto_usu FROM usuario WHERE nom_usu=?";
+        String consulta="SELECT nombres, foto_usu FROM usuario WHERE nom_usu=?";
         ResultSet rs=null;
         Usuario us = new Usuario();
         try{
