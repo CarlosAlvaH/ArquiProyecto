@@ -1,6 +1,8 @@
 
 package prototipobrazo.clase;
 
+import javax.swing.Icon;
+
 public class Caja {
     private int idCaja;
     private String nombre;
@@ -9,9 +11,18 @@ public class Caja {
     private String peso;
     private String tipo;
     private int cantidad;
+    private Icon imagen;
     
     public Caja(){
         
+    }
+
+    public Icon getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Icon imagen) {
+        this.imagen = imagen;
     }
 
     public int getIdCaja() {

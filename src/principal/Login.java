@@ -25,8 +25,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.getContentPane().setBackground(new Color(38, 41, 48));
-        String rut="D:\\Backup\\Descargas\\foto1.jpg";
-        String u="admin2";
+        String rut="D:\\Backup\\Descargas\\oficina.jpg";
+        int u=8;
         
         //Enviar la imagen a la base de datos
         //insertarImagen(rut,u);
@@ -180,20 +180,20 @@ public class Login extends javax.swing.JFrame {
         this.repaint();
     }
 
-    public void insertarImagen(String ruta, String nomUsu) {
+    public void insertarImagen(String ruta, int id) {
         File foto = new File(ruta);
         if (!foto.exists()) {
             System.out.println("El archivo no existe en la ruta");
             return;
         }
         try (InputStream inputStream = new FileInputStream(foto)) {
-            String consulta = "UPDATE usuario SET foto_usu=? WHERE nom_usu=?";
+            String consulta = "UPDATE caja SET imagen=? WHERE idCaja=?";
             ResultSet rs = null;
             try {
                 Connection cn = getConnection("arquitectura");
                 PreparedStatement pst = cn.prepareStatement(consulta);
                 pst.setBinaryStream(1, inputStream, (int) foto.length());
-                pst.setString(2, nomUsu);
+                pst.setInt(2, id);
                 int rowsAffected = pst.executeUpdate();
                 if (rowsAffected > 0) {
                     System.out.println("Archivo insertado correctamente en la columna LONGBLOB.");

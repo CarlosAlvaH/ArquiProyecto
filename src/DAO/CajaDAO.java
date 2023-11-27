@@ -1,11 +1,13 @@
 package DAO;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import prototipobrazo.clase.Caja;
 import util.SqlDbConexion;
 
@@ -33,6 +35,12 @@ public class CajaDAO implements CajaDAOInt {
                 obj.setPeso(rs.getString(5));
                 obj.setTipo(rs.getString(6));
                 obj.setCantidad(rs.getInt(7));
+                Blob img=(Blob) rs.getBlob(8);
+                
+                byte[] imgBytes = img.getBytes(1, (int) img.length());
+                ImageIcon image = new ImageIcon(imgBytes);
+                obj.setImagen(image);
+                
                 data.add(obj);
             }
         } catch (Exception e) {
@@ -62,6 +70,12 @@ public class CajaDAO implements CajaDAOInt {
                 obj.setPeso(rs.getString(5));
                 obj.setTipo(rs.getString(6));
                 obj.setCantidad(rs.getInt(7));
+                Blob img=(Blob) rs.getBlob(8);
+                
+                byte[] imgBytes = img.getBytes(1, (int) img.length());
+                ImageIcon image = new ImageIcon(imgBytes);
+                obj.setImagen(image);
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
