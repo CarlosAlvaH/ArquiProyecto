@@ -162,16 +162,15 @@ public class CajaDAO implements CajaDAOInt {
             cn = SqlDbConexion.getConnection("arquitectura");
             String sql = "";
 
-            sql = "update caja set nombre=?, fecIng=?, fec_sal=?, peso=?, tipo=?,cantidad=? where idCaja=? ";
+            sql = "update caja set nombre=?, fecIng=CURDATE(), fec_sal=?, peso=?, tipo=?,cantidad=? where idCaja=? ";
 
             pst = (PreparedStatement) cn.prepareStatement(sql);
-            pst.setInt(7, obj.getIdCaja());
+            pst.setInt(6, obj.getIdCaja());
             pst.setString(1, obj.getNombre());
-            pst.setString(2, obj.getFec_ing());
-            pst.setString(3, obj.getFec_sal());
-            pst.setString(4, obj.getPeso());
-            pst.setString(5, obj.getTipo());
-            pst.setInt(6, obj.getCantidad());
+            pst.setString(2, obj.getFec_sal());
+            pst.setString(3, obj.getPeso());
+            pst.setString(4, obj.getTipo());
+            pst.setInt(5, obj.getCantidad());
             estado = pst.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
